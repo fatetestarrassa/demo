@@ -18,4 +18,22 @@
         id, user_name, password, email, created_stime, modified_stime, is_del
     </sql>
 
+    <select id="selectPageVo" resultType="com.sunbing.demo.vo.UserPageVo">
+        SELECT * FROM user
+        <include refid="BaseWhere"/>
+        order by id desc
+    </select>
+    <sql id="BaseWhere">
+        <where>
+            <if test="queryParam.id != null">
+                AND id = #{queryParam.id}
+            </if>
+            <if test="queryParam.userName != null and queryParam.userName != '' ">
+                AND user_name LIKE CONCAT('%', #{queryParam.userName}, '%')
+            </if>
+            <if test="queryParam.email != null and queryParam.email != ''">
+                AND email LIKE CONCAT('%', #{queryParam.email}, '%')
+            </if>
+        </where>
+    </sql>
 </mapper>

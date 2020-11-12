@@ -4,11 +4,13 @@ spring:
     druid:
       driver-class-name: com.mysql.cj.jdbc.Driver
       url: jdbc:mysql://39.100.17.54:3306/demo?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&useSSL=false&serverTimezone=UTC
-      username: dev
+      username: devdemo
       password: 123456
       initial-size: 1
       max-active: 8
       min-idle: 1
       max-wait: 2000
       test-while-idle: true
-
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
