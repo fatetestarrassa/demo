@@ -1,16 +1,68 @@
 spring:
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://39.100.17.54:3306/demo?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&useSSL=false&serverTimezone=UTC
+    username: devdemo
+    password: 123456
     druid:
-      driver-class-name: com.mysql.cj.jdbc.Driver
-      url: jdbc:mysql://39.100.17.54:3306/demo?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&useSSL=false&serverTimezone=UTC
-      username: devdemo
-      password: 123456
-      initial-size: 1
-      max-active: 8
-      min-idle: 1
+      #初始化大小，默认0
+      initial-size: 5
+      #最大连接池数量，默认8
+      max-active: 20
+      #最小连接池数量
+      min-idle: 5
+      #获取连接时最大等待时间，单位毫秒
       max-wait: 2000
+      #默认false：是否缓存preparedStatement，也就是PSCache。对支持游标的数据库提升巨大，如oracle。mysql建议关闭
+      pool-prepared-statements: false
+      #每个连接最大缓存preparedStatement数量,默认-1
+      max-pool-prepared-statement-per-connection-size: -1
+      #用来检测连接是否有效的sql的一个查询语句
+      validation-query: select 1
+      #检测有效sql的超时时间，单位秒
+      validation-query-timeout: 1
+      #申请连接时执行validation-query检测是否有效，true会降低性能
+      test-on-borrow: false
+      #归还连接时执行validation-query检测是否有效，true会降低性能
+      test-on-return: false
+      #申请连接的时候检测，如果空闲时间大于timeBetweenEvictionRunsMillis，执行validationQuery检测连接是否有效
       test-while-idle: true
+      #连接池中的minIdle数量以内的连接，空闲时间超过minEvictableIdleTimeMillis，则会执行keepAlive操作
+      keep-alive: false
+      #1) Destroy线程会检测连接的间隔时间，如果连接空闲时间大于等于minEvictableIdleTimeMillis则关闭物理连接。 2) testWhileIdle的判断依据
+      time-between-eviction-runs-millis: 300000
+      #保持空闲不被驱逐的最小时间
+      min-evictable-idle-time-millis: 40000
+      #监控统计的stat,以及防sql注入的wall
+      filters: stat,wall
+      #Spring监控AOP切入点，如x.y.z.service.*,配置多个英文逗号分隔
+      aop-patterns: com.sunbing.demo.service.impl.*
+      #监控配置
+      web-stat-filter:
+        #启用监控
+        enabled: true
+        #添加过滤规则
+        url-pattern: /*
+        #忽略过滤的格式
+        exclusions:
+      #StatViewServlet配置:提供监控页面和Json api
+      stat-view-servlet:
+        #启用
+        enabled: true
+        #过滤规则
+        url-pattern: /druid/*
+        #是否允许充值数据
+        reset-enable: false
+        #登录用户名
+        login-username: druid
+        #登录密码
+        login-password: druid
+        #ip白名单
+        allow: 127.0.0.1
+        #ip黑名单
+        deny:
+
 mybatis-plus:
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
