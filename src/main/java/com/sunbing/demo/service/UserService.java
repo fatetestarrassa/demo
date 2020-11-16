@@ -19,6 +19,5 @@ import com.sunbing.demo.vo.UserPageVo;
  */
 public interface UserService extends IService<User> {
     IPage<UserPageVo> selectPageVo(Page page, UserQueryParam queryParam);
-
     ResponseResult saveEntity(UserSaveParam param);
 }
