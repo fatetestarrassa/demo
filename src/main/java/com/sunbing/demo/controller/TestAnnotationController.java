@@ -1,7 +1,9 @@
 package com.sunbing.demo.controller;
 
 import com.sunbing.demo.annotation.LoginRequired;
+import com.sunbing.demo.annotation.MyLog;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -24,5 +26,12 @@ public class TestAnnotationController {
     @RequestMapping("/sourceB")
     public String sourceB(){
         return "你在访问SourceB资源";
+    }
+
+
+    @MyLog
+    @RequestMapping("/sourceC/{source_name}")
+    public String sourceC(@PathVariable("source_name") String sourceName){
+        return "你在访问SourceC资源";
     }
 }
