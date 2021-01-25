@@ -1,5 +1,6 @@
 package com.sunbing.demo.entity;
 
+import com.sunbing.demo.annotation.MyField;
 import lombok.Data;
 
 /**
@@ -9,6 +10,7 @@ import lombok.Data;
  */
 @Data
 public class Teacher {
+
     private Integer id;
     private String name;
 }
