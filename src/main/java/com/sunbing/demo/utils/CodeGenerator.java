@@ -53,7 +53,7 @@ public class CodeGenerator {
         //strategyConfig.setSuperServiceImplClass();自定义ServiceImpl父类，全限定名
         //strategyConfig.setSuperMapperClass();自定义Mapper父类，全限定名
         //strategyConfig.setEnableSqlFilter();since3.3.1默认激活，关闭后likeTable与notLikeTable将失效
-        strategyConfig.setInclude("user");
+        strategyConfig.setInclude("vehicle");//生成的表
         //strategyConfig.setLikeTable();since 3.3.0模糊匹配表名
         //strategyConfig.setExclude();排除表名，nableSqlFilter为false时，允许正则表达式
         //strategyConfig.setNotLikeTable();since 3.3.0模糊排除表名

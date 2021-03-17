@@ -66,3 +66,23 @@ spring:
 mybatis-plus:
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+management:
+  endpoints:
+    web:
+      exposure:
+        #默认开放2个端点：health 和 info，可以通过 include 和 exclude 部分或者全部打开
+        include: '*'
+        #默认 /actuator/* 也可以自定义
+      base-path: /monitor
+  endpoint:
+    health:
+      show-details: always
+    shutdown:
+      enabled: true
+
+info:
+  app:
+    name: demo
+    version: 1.0.0
+    test: test

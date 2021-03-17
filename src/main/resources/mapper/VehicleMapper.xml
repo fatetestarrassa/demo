@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sunbing.demo.mapper.VehicleMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.sunbing.demo.entity.Vehicle">
+        <id column="id" property="id" />
+        <result column="vin" property="vin" />
+        <result column="year" property="year" />
+        <result column="make" property="make" />
+        <result column="model" property="model" />
+        <result column="color" property="color" />
+        <result column="vehicle_type" property="vehicleType" />
+        <result column="door_count" property="doorCount" />
+        <result column="box_size" property="boxSize" />
+        <result column="extended_cab" property="extendedCab" />
+        <result column="power_sliding_door" property="powerSlidingDoor" />
+        <result column="all_wheel_drive" property="allWheelDrive" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, vin, year, make, model, color, vehicle_type, door_count, box_size, extended_cab, power_sliding_door, all_wheel_drive
+    </sql>
+
+    <resultMap id="vehicleResultMap" type="com.sunbing.demo.entity.Vehicle">
+        <!--<id column="id" property="id" />-->
+        <result column="vin" property="vin" />
+        <result column="year" property="year" />
+        <result column="make" property="make" />
+        <result column="model" property="model" />
+        <result column="color" property="color" />
+        <result column="vehicle_type" property="vehicleType" />
+        <discriminator javaType="int" column="vehicle_type">
+            <case value="1" resultType="com.sunbing.demo.entity.CarResult">
+                <result column="door_count" property="doorCount" />
+            </case>
+        </discriminator>
+    </resultMap>
+    <select id="selectVehicle" resultMap="vehicleResultMap">
+        SELECT * FROM vehicle where id = #{id}
+    </select>
+
+</mapper>

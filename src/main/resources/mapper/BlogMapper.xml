@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sunbing.demo.mapper.BlogMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.sunbing.demo.entity.Blog">
+        <id column="id" property="id" />
+        <result column="name" property="name" />
+        <result column="author_id" property="authorId" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, name, author_id
+    </sql>
+
+    <resultMap id="blogResultMap" type="com.sunbing.demo.entity.Blog">
+        <id column="id" property="id" />
+        <result column="name" property="name" />
+        <result column="author_id" property="authorId" />
+        <association property="author" column="author_id" javaType="com.sunbing.demo.entity.Author" select="selectAuthor" />
+    </resultMap>
+
+    <select id="selectBlog" resultMap="blogResultMap">
+        select * from blog where id = #{id}
+    </select>
+
+    <select id="selectAuthor" resultType="com.sunbing.demo.entity.Author">
+        select * from author where id = #{id}
+    </select>
+
+    <resultMap id="blogResultMap1" type="com.sunbing.demo.entity.Blog">
+        <id column="id" property="id" />
+        <result column="name" property="name" />
+        <result column="author_id" property="authorId" />
+        <association property="author" column="author_id" javaType="com.sunbing.demo.entity.Author" resultMap="authorResultMap"/>
+    </resultMap>
+    <resultMap id="authorResultMap" type="com.sunbing.demo.entity.Author">
+        <id column="author_id" property="id" />
+        <result column="author_name" property="name" />
+        <result column="author_password" property="password" />
+        <result column="author_email" property="email" />
+        <result column="author_bio" property="bio" />
+    </resultMap>
+
+    <resultMap id="blogResultMap2" type="com.sunbing.demo.entity.Blog">
+        <id column="id" property="id" />
+        <result column="name" property="name" />
+        <result column="author_id" property="authorId" />
+        <association property="author" column="author_id">
+            <id column="author_id" property="id" />
+            <result column="author_name" property="name" />
+            <result column="author_password" property="password" />
+            <result column="author_email" property="email" />
+            <result column="author_bio" property="bio" />
+        </association>
+    </resultMap>
+
+    <select id="selectBlog1" resultMap="blogResultMap2">
+        SELECT
+        b.id,
+        b.name,
+        a.id AS author_id,
+        a.name AS author_name,
+        a.password AS author_password,
+        a.email AS author_email,
+        a.bio AS author_bio
+        FROM blog b
+        LEFT JOIN author a ON b.author_id = a.id WHERE b.id = #{id}
+    </select>
+
+    <resultMap id="blogResultMap3" type="com.sunbing.demo.entity.Blog">
+        <id column="id" property="id" />
+        <result column="name" property="name" />
+        <result column="author_id" property="authorId" />
+        <association property="author" column="author_id" javaType="com.sunbing.demo.entity.Author" resultMap="authorResultMap"/>
+        <association property="coAuthor" column="co_author_id" javaType="com.sunbing.demo.entity.Author"
+                     columnPrefix="co_" resultMap="authorResultMap"/>
+    </resultMap>
+
+    <select id="selectBlog3" resultMap="blogResultMap3">
+        SELECT
+        b.id,
+        b.name,
+        a.id AS author_id,
+        a.name AS author_name,
+        a.password AS author_password,
+        a.email AS author_email,
+        a.bio AS author_bio,
+        c.id AS co_author_id,
+        c.name AS co_author_name,
+        c.password AS co_author_password,
+        c.email AS co_author_email,
+        c.bio AS co_author_bio
+        FROM blog b
+        LEFT JOIN author a ON b.author_id = a.id LEFT JOIN author c ON b.co_author_id = c.id WHERE b.id = #{id}
+    </select>
+
+</mapper>
